@@ -22,9 +22,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push CRUD image
         uses: docker/build-push-action@v5
         with:
           context: ./crud-service
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/deimos-crud:latest
+
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/deimos-frontend:latest
