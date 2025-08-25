@@ -24,8 +24,7 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
-        working-directory: ./crud-service
         with:
-          context: .
+          context: ./crud-service
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/deimos-crud:latest
