@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: CRUD-mysql-deploy
+  name: crud-mysql-deploy
   namespace: deimos
 spec:
   selector:
     matchLabels:
-      app: CRUD-mysql
+      app: crud-mysql
   template:
     metadata:
       labels:
-        app: CRUD-mysql
+        app: crud-mysql
     spec:
       containers:
-        - name: CRUD-mysql
+        - name: crud-mysql
           image: mysql:8.0
           env:
             - name: MYSQL_ROOT_PASSWORD
@@ -28,4 +28,4 @@ spec:
       volumes: 
         - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: CRUD-mysql-pvc
+            claimName: crud-mysql-pvc

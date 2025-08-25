@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: CRUD-mysql-pvc
+  name: crud-mysql-pvc
   namespace: deimos
 spec:
   accessModes:
