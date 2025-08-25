@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud
+  namespace: deimos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crud
+  template:
+    metadata:
+      labels:
+        app: crud
+    spec:
+      containers:
+        - name: crud
+          image: ayushjsrtia/deimos-crud:latest   # <-- update with your Go image
+          env:
+            - name: MYSQL_HOST
+              value: "10.32.0.3"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_PASSWORD
+              value: "root"
+            - name: MYSQL_DATABASE
+              value: "NOTES"
+          ports:
+            - containerPort: 5000
