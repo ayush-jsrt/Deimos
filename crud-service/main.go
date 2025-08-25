@@ -17,7 +17,7 @@ var db *sql.DB
 const (
 	dbUser     = "root"
 	dbPassword = "root"
-	dbHost     = "mysql.code-analyzer.svc.cluster.local"
+	dbHost     = "crud-mysql.deimos.svc.cluster.local"
 	dbName     = "NOTES"
 )
 
