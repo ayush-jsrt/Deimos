@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -70,7 +71,7 @@ func getNotes(c *gin.Context) {
 	}
 	defer rows.Close()
 
-	var notes []Note
+	notes := []Note{} // ensures [] instead of null
 	for rows.Next() {
 		var n Note
 		if err := rows.Scan(&n.Name, &n.Content); err != nil {
@@ -93,7 +94,7 @@ func createNote(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": "Note created successfully"})
+	c.JSON(http.StatusCreated, gin.H{"message": "Note created successfully"})
 }
 
 func updateNote(c *gin.Context) {
@@ -127,10 +128,19 @@ func main() {
 
 	r := gin.Default()
 
+	// Enable CORS for all origins
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders: []string{"Origin", "Content-Type", "Accept"},
+	}))
+
+	// Routes
 	r.GET("/notes", getNotes)
 	r.POST("/notes", createNote)
 	r.PUT("/notes/:name", updateNote)
 	r.DELETE("/notes/:name", deleteNote)
 
+	log.Println("[Server] Running on port 5000")
 	r.Run(":5000") // listen on port 5000
 }
